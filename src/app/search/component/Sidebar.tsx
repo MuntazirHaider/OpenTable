@@ -1,5 +1,6 @@
 import React from 'react'
-import { PrismaClient } from '@prisma/client'
+import { PRICE, PrismaClient } from '@prisma/client'
+import Link from 'next/link';
 
 interface List {
     name: string
@@ -22,7 +23,7 @@ const fetchItem = async () => {
     return items;
 }
 
-const Sidebar = async () => {
+const Sidebar = async ({ searchParams }: {searchParams: {searchFor?: string, region?: string, city?: string, price?:PRICE}}) => {
     const locations = await fetchLocation();
     const regions = await fetchRegion();
     const items = await fetchItem();
@@ -31,44 +32,80 @@ const Sidebar = async () => {
         <div className="w-1/5">
             <div className="border-b pb-4">
                 <h1 className="mb-2">Location</h1>
+                <div className='flex flex-col'>
                 {
                     locations.map((location) => (
-                        <p className="font-light text-reg capitalize">{location.name}</p>
+                        <Link href={{
+                            pathname: '/search',
+                            query: {
+                                ...searchParams,
+                                city: location.name}
+                        }} className="font-light text-reg capitalize">{location.name}</Link>
                     ))
                 }
+                </div>
             </div>
             <div className="border-b pb-4 mt-3">
                 <h1 className="mb-2">Region</h1>
+                <div className='flex flex-col'>
                 {
                     regions.map((region) => (
-                        <p className="font-light text-reg capitalize">{region.name}</p>
+                        <Link href={{
+                            pathname: '/search',
+                            query: {
+                                ...searchParams,
+                                region: region.name}
+                        }} className="font-light text-reg capitalize">{region.name}</Link>
                     ))
                 }
+                </div>
             </div>
             <div className="border-b pb-4 mt-3">
                 <h1 className="mb-2">Dishes</h1>
+                <div className='flex flex-col'>
                 {
                     items.map((item) => (
-                        <p className="font-light text-reg capitalize">{item.name}</p>
+                        <Link href={{
+                            pathname: '/search',
+                            query: {
+                                ...searchParams,
+                                dish: item.name}
+                        }}  className="font-light text-reg capitalize">{item.name}</Link>
                     ))
                 }
+                </div>
             </div>
             <div className="mt-3 pb-4 mr-1">
                 <h1 className="mb-2">Price</h1>
                 <div className="flex">
-                    <button className="border w-full text-reg font-light rounded-l p-2">
+                    <Link  href={{
+                            pathname: '/search',
+                            query: {
+                                ...searchParams,
+                                price: PRICE.Cheap}
+                        }} className="border w-full text-reg font-light rounded-l p-2">
                         $
-                    </button>
-                    <button
+                    </Link>
+                    <Link  href={{
+                            pathname: '/search',
+                            query: {
+                                ...searchParams,
+                                price: PRICE.Regular}
+                        }}
                         className="border-r border-t border-b w-full text-reg font-light p-2"
                     >
                         $$
-                    </button>
-                    <button
+                    </Link>
+                    <Link  href={{
+                            pathname: '/search',
+                            query: {
+                                ...searchParams,
+                                price: PRICE.Expensive}
+                        }}
                         className="border-r border-t border-b w-full text-reg font-light p-2 rounded-r"
                     >
                         $$$
-                    </button>
+                    </Link>
                 </div>
             </div>
         </div>

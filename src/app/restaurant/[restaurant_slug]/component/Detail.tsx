@@ -1,12 +1,17 @@
 import React from 'react'
 import {RestaurantType} from '../page'
+import Stars from '@/app/component/Stars';
 
 interface Props {
-    restaurant: RestaurantType 
+    restaurant: RestaurantType
 }
 
+
 const Detail = ({restaurant}:Props) => {
-    const {id, name, images, description} = restaurant;
+    const {id, name, images, description, reviews} = restaurant;
+    const totalRatings = reviews.reduce((acc, review) => acc + review.rating, 0);
+    const averageRating = reviews.length > 0 ? totalRatings / reviews.length : 0;
+    
     
     return (
         <div>
@@ -16,11 +21,11 @@ const Detail = ({restaurant}:Props) => {
             {/* TITLE */} {/* RATING */}
             <div className="flex items-end">
                 <div className="ratings mt-2 flex items-center">
-                    <p>*****</p>
-                    <p className="text-reg ml-3">4.9</p>
+                    <Stars reviews={reviews}/>
+                    <p className="text-reg ml-3">{averageRating.toFixed(1)}</p>
                 </div>
                 <div>
-                    <p className="text-reg ml-4">600 Reviews</p>
+                    <p className="text-reg ml-4">{reviews.length} {reviews.length > 1 ? "Reviews" : "Review"}</p>
                 </div>
             </div>
             {/* RATING */} {/* DESCRIPTION */}
@@ -44,6 +49,9 @@ const Detail = ({restaurant}:Props) => {
                     ))}
                 </div>
             </div>
+            <h1 className="font-bold text-3xl mt-10 mb-7 borber-b pb-5">
+                {reviews.length ? "What Others peoples are saying" : ''}
+            </h1>
         </div>
     )
 }

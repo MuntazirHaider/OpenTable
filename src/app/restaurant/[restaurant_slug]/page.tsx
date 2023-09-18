@@ -4,7 +4,7 @@ import Detail from './component/Detail'
 import Reviews from './component/Reviews'
 import Reservation from './component/Reservation'
 import RestaurantNav from './component/RestaurantNav'
-import { PrismaClient, Location, Item } from '@prisma/client'
+import { PrismaClient, Location, Item, Review } from '@prisma/client'
 
 interface Props {
   params: {
@@ -20,6 +20,7 @@ export interface RestaurantType {
     location: Location
     slug: string
     items: Item[]
+    reviews: Review[]
 }
 
 const prisma = new PrismaClient();
@@ -37,10 +38,11 @@ const fetchRestaurant = async (slug:string): Promise<RestaurantType> => {
       location: true,
       slug: true,
       items: true,
+      reviews: true
     }
   })
 
-  if(!restaurant) throw new Error()
+  if(!restaurant) throw new Error("Restaurant Not Found")
 
   return restaurant;
 }
@@ -48,16 +50,18 @@ const fetchRestaurant = async (slug:string): Promise<RestaurantType> => {
 const RestaurantDetailPage = async ({params} : Props) => {
   
   const restaurant = await fetchRestaurant(params.restaurant_slug);
-  const {name, location, slug} = restaurant
+  const {name, location, slug,reviews} = restaurant
   
   return (
     <div>
-      <Header name={name} location={location}/>  
+      <Header name={name} location={location} load={''}/>  
       <div className="flex m-auto w-2/3 justify-between items-start 0 -mt-11">
         <div className="bg-white w-[70%] rounded p-3 shadow">
           <RestaurantNav slug={slug}/>
           <Detail restaurant={restaurant}/>
-          <Reviews />
+          {reviews.map((review)=>(
+            <Reviews review={review}/>
+          ))}
         </div>
         <Reservation />
       </div>
