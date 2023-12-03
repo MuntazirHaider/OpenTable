@@ -3,7 +3,7 @@ import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form'
 
 const SignInInputs = ({register,errors}: {register: UseFormRegister<FieldValues>, errors: FieldErrors<FieldValues>}) => {
   return (
-    <div>
+    <div className='h-96'>
     <div className='my-3 flex text-sm w-full'>
       <input type="email"
       className={`border ${errors.email ? "border-red-500" : ""}rounded p-2 py-3 w-full`}

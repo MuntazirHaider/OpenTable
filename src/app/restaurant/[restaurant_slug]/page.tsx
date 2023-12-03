@@ -21,6 +21,8 @@ export interface RestaurantType {
     slug: string
     items: Item[]
     reviews: Review[]
+    open_time: string
+    close_time: string
 }
 
 const prisma = new PrismaClient();
@@ -38,7 +40,9 @@ const fetchRestaurant = async (slug:string): Promise<RestaurantType> => {
       location: true,
       slug: true,
       items: true,
-      reviews: true
+      reviews: true,
+      open_time: true,
+      close_time: true
     }
   })
 
@@ -50,7 +54,7 @@ const fetchRestaurant = async (slug:string): Promise<RestaurantType> => {
 const RestaurantDetailPage = async ({params} : Props) => {
   
   const restaurant = await fetchRestaurant(params.restaurant_slug);
-  const {name, location, slug,reviews} = restaurant
+  const {name, location, slug,reviews,open_time,close_time} = restaurant
   
   return (
     <div>
@@ -63,7 +67,7 @@ const RestaurantDetailPage = async ({params} : Props) => {
             <Reviews review={review}/>
           ))}
         </div>
-        <Reservation />
+        <Reservation openTime={open_time} closeTime={close_time} slug={slug}/>
       </div>
     </div>
   )

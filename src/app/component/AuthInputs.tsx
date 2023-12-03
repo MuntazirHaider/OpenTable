@@ -3,7 +3,7 @@ import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form'
 
 const AuthInputs = ({register,errors}: {register: UseFormRegister<FieldValues>, errors: FieldErrors<FieldValues>}) => {
   return (
-    <div>
+    <div className='h-96'>
       <div className='my-3 flex text-sm w-full'>
         <input type="text"
         className={`border ${errors.name ? "border-red-500" : ""} rounded p-2 py-3 w-full`}
@@ -17,7 +17,7 @@ const AuthInputs = ({register,errors}: {register: UseFormRegister<FieldValues>, 
         placeholder='City'
         {...register("city", { required: true, pattern: /^[a-zA-Z]+$/, minLength: 2 })}
          />
-        <input type="number"
+        <input type="text"
         className={`border ${errors.phone ? "border-red-500" : ""} rounded p-2 py-3 w-[49%]`}
         placeholder='Phone'
         {...register("phone", { required: true, pattern:/^[0-9+-]+$/, maxLength: 10, minLength:10 })}
