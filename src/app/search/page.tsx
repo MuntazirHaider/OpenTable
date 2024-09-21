@@ -118,8 +118,7 @@ const fetchRestaurant = async (searchParams: { dish?: string; city?: string; reg
 
 
 const SearchPage = async ({ searchParams }: { searchParams: { searchFor?: string, region?: string, city?: string, price?: PRICE } }) => {
-  console.log(searchParams);
-
+  
   let restaurant = await fetchRestaurant(searchParams);
   
   

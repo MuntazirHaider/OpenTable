@@ -2,6 +2,7 @@
 # XUenyPplApUXiLnV - supra base password
 # dependencies
 /node_modules
+.env
 /.pnp
 .pnp.js
 

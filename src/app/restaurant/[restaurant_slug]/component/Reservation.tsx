@@ -43,8 +43,6 @@ const Reservation = ({ openTime, closeTime, slug }: {
         })
     }
 
-    console.log("Available data", data);
-
     const convertToDisplayTime = (time: string) => {
         const arr = time.split(':');
         const hour = Number(arr[0]);

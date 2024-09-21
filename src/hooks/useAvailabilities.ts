@@ -1,6 +1,5 @@
 'use client'
 import axios from "axios";
-import { log } from "console";
 import { useState } from "react";
 
 export default function useAvailabilities() {

@@ -26,7 +26,6 @@ const Form = ({ slug, searchParams }: { slug: string, searchParams: searchParams
             ...Formdata,
             setdidBook
         })
-        console.log(data);
     }
 
     return (
